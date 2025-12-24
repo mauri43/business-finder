@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Business Finder</h1>
+        <p class="subtitle">Find businesses missing websites or using only Facebook</p>
+
+        <!-- Search Form -->
+        <div class="search-form">
+            <!-- Location Input with Autocomplete -->
+            <div class="form-group">
+                <label for="address-input">Search Location</label>
+                <input
+                    type="text"
+                    id="address-input"
+                    placeholder="Enter an address or place name"
+                    autocomplete="off"
+                >
+                <!-- Hidden inputs to store location data -->
+                <input type="hidden" id="lat" value="">
+                <input type="hidden" id="lng" value="">
+                <input type="hidden" id="place-id" value="">
+                <input type="hidden" id="formatted-address" value="">
+                <small id="location-status" class="status-text"></small>
+            </div>
+
+            <!-- Business Query -->
+            <div class="form-group">
+                <label for="query-input">Business Type</label>
+                <input
+                    type="text"
+                    id="query-input"
+                    placeholder="e.g., plumber, restaurant, dentist"
+                >
+            </div>
+
+            <!-- Filters Row -->
+            <div class="filters-row">
+                <!-- Minimum Reviews -->
+                <div class="form-group">
+                    <label for="min-reviews">Minimum Reviews</label>
+                    <input
+                        type="number"
+                        id="min-reviews"
+                        value="5"
+                        min="0"
+                        max="10000"
+                    >
+                </div>
+
+                <!-- Radius -->
+                <div class="form-group">
+                    <label for="radius-value">Search Radius</label>
+                    <div class="radius-control">
+                        <input
+                            type="range"
+                            id="radius-slider"
+                            min="1"
+                            max="50"
+                            value="10"
+                        >
+                        <span id="radius-display">10</span>
+                        <select id="radius-unit">
+                            <option value="miles">miles</option>
+                            <option value="km">km</option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="radius-value" value="10">
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-row">
+                <button id="search-btn" class="btn btn-primary" disabled>
+                    Search
+                </button>
+                <button id="download-btn" class="btn btn-secondary" disabled>
+                    Download CSV
+                </button>
+            </div>
+        </div>
+
+        <!-- Status Messages -->
+        <div id="status-message" class="status-message hidden"></div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="results-section hidden">
+            <div class="results-header">
+                <h2>Results</h2>
+                <span id="results-count"></span>
+            </div>
+
+            <div class="table-container">
+                <table id="results-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Website</th>
+                            <th>Reviews</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body">
+                        <!-- Results will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Google Maps JavaScript API with Places library -->
+    <!-- API key is injected server-side from environment variable -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_js_key }}&libraries=places&callback=initAutocomplete"
+        async
+        defer
+    ></script>
+
+    <!-- Application JavaScript -->
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

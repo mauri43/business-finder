@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app.py"
+    }
+  ],
+  "env": {
+    "GOOGLE_MAPS_JS_KEY": "@google-maps-js-key",
+    "GOOGLE_PLACES_API_KEY": "@google-places-api-key"
+  }
+}
