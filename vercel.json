@@ -11,9 +11,5 @@
       "src": "/(.*)",
       "dest": "app.py"
     }
-  ],
-  "env": {
-    "GOOGLE_MAPS_JS_KEY": "@google-maps-js-key",
-    "GOOGLE_PLACES_API_KEY": "@google-places-api-key"
-  }
+  ]
 }
